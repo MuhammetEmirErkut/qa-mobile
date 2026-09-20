@@ -34,7 +34,6 @@ public class LoginScreen extends BasePage {
     }
 
     public String getStatusMessage() {
-        dismissSystemAlertIfPresent();
         return getText(txtStatusMessage, WaitStrategy.VISIBLE);
     }
 

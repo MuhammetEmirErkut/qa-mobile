@@ -66,8 +66,8 @@ public abstract class BasePage {
 
     public void dismissSystemAlertIfPresent() {
         try {
-            // Android System Dialog Buttons
-            By androidAlertBtn = By.xpath("//*[@resource-id='android:id/button1' or @resource-id='android:id/button2' or @text='OK' or @text=\"Don't Show Again\"]");
+            // Android System Dialog Buttons (OS compatibility, permission or battery warnings)
+            By androidAlertBtn = By.xpath("//*[@resource-id='android:id/button1' and (contains(@text, 'OK') or contains(@text, 'Close')) and ../..//*[@resource-id='android:id/alertTitle' or contains(@text, 'built for an older')]] | //*[@text=\"Don't Show Again\"]");
             if (!driver.findElements(androidAlertBtn).isEmpty()) {
                 driver.findElement(androidAlertBtn).click();
                 log.info("Android sistem uyarısı kapatıldı.");
