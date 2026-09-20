@@ -1,0 +1,8 @@
+target/
+.allure/
+allure-results/
+allure-report/
+.git/
+.idea/
+*.log
+.DS_Store

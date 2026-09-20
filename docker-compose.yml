@@ -1,0 +1,22 @@
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.jenkins
+    container_name: qa-mobile-jenkins
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./:/workspace/qa-mobile
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  jenkins_data:
+    name: qa-mobile-jenkins-data

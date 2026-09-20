@@ -1,0 +1,15 @@
+{
+  "platformName": "Android",
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "Pixel_7_API_34",
+  "appium:udid": "emulator-5554",
+  "appium:app": "/Users/erkut/projects/qa-mobile/apps/TheApp.apk",
+  "appium:appPackage": "com.appiumpro.the_app",
+  "appium:appActivity": "com.appiumpro.the_app.MainActivity",
+  "appium:noReset": false,
+  "appium:fullReset": false,
+  "appium:autoGrantPermissions": true,
+  "appium:newCommandTimeout": 180,
+  "appium:chromedriverAutodownload": true,
+  "appium:disableWindowAnimation": true
+}

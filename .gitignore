@@ -1,0 +1,12 @@
+target/
+*.log
+.DS_Store
+.idea/
+*.iml
+.vscode/
+allure-report/
+allure-results/
+apps/*.apk
+apps/*.app
+apps/*.ipa
+!apps/README.md
