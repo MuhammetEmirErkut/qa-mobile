@@ -7,7 +7,7 @@ public class HomeScreen extends BasePage {
 
     private final By btnLoginScreen = AppiumBy.accessibilityId("Login Screen");
     private final By btnEchoBox = AppiumBy.accessibilityId("Echo Box");
-    private final By btnDualWebview = By.xpath("//*[contains(@name, 'Dual Webview') or contains(@label, 'Dual Webview') or contains(@text, 'Dual Webview')]");
+    private final By btnDualWebview = By.xpath("//*[@content-desc='Dual Webview Demo' or @text='Dual Webview Demo' or contains(@content-desc, 'Dual Webview') or contains(@text, 'Dual Webview') or contains(@name, 'Dual Webview') or contains(@label, 'Dual Webview')]");
     private final By btnListDemo = AppiumBy.accessibilityId("List Demo");
     private final By btnClipboardDemo = AppiumBy.accessibilityId("Clipboard Demo");
 

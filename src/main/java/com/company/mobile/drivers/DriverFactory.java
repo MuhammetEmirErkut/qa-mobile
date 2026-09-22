@@ -49,6 +49,8 @@ public final class DriverFactory {
                     options.setAutoGrantPermissions(true);
                     options.setNewCommandTimeout(FrameworkConstants.APPIUM_COMMAND_TIMEOUT);
                     options.setCapability("appium:chromedriverAutodownload", true);
+                    options.setCapability("appium:ensureWebviewsHavePages", true);
+                    options.setCapability("appium:enableWebviewDetailsCollection", true);
 
                     driver = new AndroidDriver(appiumServerUri, options);
                 }
