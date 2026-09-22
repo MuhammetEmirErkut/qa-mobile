@@ -4,8 +4,6 @@ pipeline {
     options {
         timeout(time: 60, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '15', artifactNumToKeepStr: '10'))
-        timestamps()
-        ansiColor('xterm')
     }
 
     parameters {
@@ -88,17 +86,25 @@ pipeline {
             script {
                 echo "📊 Test sonuçları ve Allure raporları toplanıyor..."
 
-                // Allure Sonuçlarını derle
-                allure([
-                    includeProperties: false,
-                    jdk: '',
-                    properties: [],
-                    reportBuildPolicy: 'ALWAYS',
-                    results: [[path: 'target/allure-results']]
-                ])
+                // Allure Sonuçlarını derle (Eğer eklenti kuruluysa çalışır)
+                try {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: 'target/allure-results']]
+                    ])
+                } catch (Exception e) {
+                    echo "Allure Jenkins eklentisi bulunamadı veya rapor oluşturulamadı: ${e.message}"
+                }
 
                 // TestNG XML raporlarını arşivle
-                junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+                try {
+                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
+                } catch (Exception e) {
+                    echo "JUnit eklentisi bulunamadı: ${e.message}"
+                }
 
                 // Ekran görüntüleri ve logları arşivle
                 archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
