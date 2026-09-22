@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 public class DualWebviewScreen extends BasePage {
 
     // Native Elements (visible in NATIVE_APP context)
-    private final By headerTitle = AppiumBy.accessibilityId("Dual Webview");
+    private final By headerTitle = By.xpath("//*[contains(@text, 'Dual Webview') or contains(@content-desc, 'Dual Webview') or contains(@name, 'Dual Webview') or contains(@label, 'Dual Webview')]");
 
     // Web / HTML Elements (visible only after switching to WEBVIEW context)
     private final By webHeaderH1 = By.tagName("h1");

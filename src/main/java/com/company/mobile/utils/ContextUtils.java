@@ -18,7 +18,7 @@ public final class ContextUtils {
     public static void switchToWebView() {
         AppiumDriver driver = DriverManager.getDriver();
         if (driver instanceof SupportsContextSwitching contextDriver) {
-            long endTime = System.currentTimeMillis() + 15000;
+            long endTime = System.currentTimeMillis() + 25000;
             while (System.currentTimeMillis() < endTime) {
                 Set<?> contexts = (Set<?>) contextDriver.getContextHandles();
                 log.info("Available contexts: {}", contexts);
@@ -27,14 +27,14 @@ public final class ContextUtils {
                             ? String.valueOf(map.get("id"))
                             : String.valueOf(contextObj);
 
-                    if (contextName.toUpperCase().contains("WEBVIEW")) {
+                    if (contextName.toUpperCase().contains("WEBVIEW") || contextName.toUpperCase().contains("CHROMIUM")) {
                         contextDriver.context(contextName);
                         log.info("Successfully switched to WebView context: {}", contextName);
                         return;
                     }
                 }
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ignored) {}
             }
             throw new FrameworkException("Timeout: No WEBVIEW context found within the mobile application!");

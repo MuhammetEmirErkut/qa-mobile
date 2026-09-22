@@ -34,7 +34,17 @@ public class LoginScreen extends BasePage {
     }
 
     public String getStatusMessage() {
-        return getText(txtStatusMessage, WaitStrategy.VISIBLE);
+        try {
+            // Check for native alert popup dialog first
+            org.openqa.selenium.Alert alert = wait.until(org.openqa.selenium.support.ui.ExpectedConditions.alertIsPresent());
+            String alertText = alert.getText();
+            alert.accept();
+            return alertText;
+        } catch (Exception e) {
+            // Check for in-view element or dialog text message
+            By fallbackLocator = By.xpath("//*[@resource-id='android:id/message' or @resource-id='android:id/alertTitle' or contains(@text, 'Invalid') or contains(@text, 'logged in') or contains(@label, 'Invalid') or contains(@label, 'logged in') or contains(@value, 'Invalid') or contains(@value, 'logged in')]");
+            return getText(fallbackLocator, WaitStrategy.PRESENCE);
+        }
     }
 
     public boolean isLogoutButtonDisplayed() {
