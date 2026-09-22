@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts-jdk17
 
 USER root
 
-# Temel araçları ve Maven / Docker CLI kurulumu
+# Install base tools and Maven / CLI utilities
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     git \
@@ -11,12 +11,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Allure CLI kurulumu
+# Install Allure CLI
 ARG ALLURE_VERSION=2.27.0
 RUN curl -o allure-${ALLURE_VERSION}.tgz -Ls https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz \
     && tar -zxvf allure-${ALLURE_VERSION}.tgz -C /opt/ \
     && ln -s /opt/allure-${ALLURE_VERSION}/bin/allure /usr/bin/allure \
     && rm allure-${ALLURE_VERSION}.tgz
 
-# Jenkins kullanıcısına geri dön
+# Switch back to jenkins user
 USER jenkins

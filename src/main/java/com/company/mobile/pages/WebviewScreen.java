@@ -11,8 +11,8 @@ public class WebviewScreen extends BasePage {
     private final By btnNavigate = AppiumBy.accessibilityId("navigateBtn");
 
     public WebviewScreen enterUrlAndNavigate(String url) {
-        sendKeys(inputUrl, url, "URL Giriş Alanı");
-        click(btnNavigate, "Git/Yönlendir Butonu");
+        sendKeys(inputUrl, url, "URL Input Field");
+        click(btnNavigate, "Navigate Button");
         return this;
     }
 

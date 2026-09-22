@@ -11,12 +11,12 @@ public class NavbarComponent extends BasePage {
     private final By txtTitle = AppiumBy.accessibilityId("header-title");
 
     public NavbarComponent clickMenu() {
-        click(btnMenu, "Menü Butonu");
+        click(btnMenu, "Menu Button");
         return this;
     }
 
     public NavbarComponent clickNotifications() {
-        click(btnNotifications, "Bildirimler Butonu");
+        click(btnNotifications, "Notifications Button");
         return this;
     }
 

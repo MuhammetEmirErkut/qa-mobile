@@ -6,10 +6,10 @@ import org.openqa.selenium.By;
 
 public class DualWebviewScreen extends BasePage {
 
-    // Native Elementler (NATIVE_APP modunda görünür)
+    // Native Elements (visible in NATIVE_APP context)
     private final By headerTitle = AppiumBy.accessibilityId("Dual Webview");
 
-    // Web / HTML Elementleri (Yalnızca WEBVIEW moduna geçtikten sonra görünür)
+    // Web / HTML Elements (visible only after switching to WEBVIEW context)
     private final By webHeaderH1 = By.tagName("h1");
     private final By webBody = By.tagName("body");
 

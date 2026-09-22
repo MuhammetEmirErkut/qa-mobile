@@ -16,32 +16,35 @@ import org.testng.annotations.Test;
 @Feature("Login Tests")
 public class LoginTest extends BaseTest {
 
-    @Test(description = "Başarılı kullanıcı girişi ve çıkış senaryosu")
+    @Test(description = "Verify successful user login and logout flow")
+    @Story("Positive Authentication Flow")
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("User should be able to log in with valid credentials and successfully log out.")
     public void testValidLoginAndLogout() {
         HomeScreen homeScreen = new HomeScreen();
         LoginScreen loginScreen = homeScreen.navigateToLoginScreen();
 
         loginScreen.performLogin("alice", "mypassword");
 
-        // 1. Logout butonu göründü mü?
+        // 1. Verify Logout button is displayed
         Assertions.assertThat(loginScreen.isLogoutButtonDisplayed())
-                .as("Giriş başarılı olduktan sonra Logout butonu görünmelidir.")
+                .as("Logout button should be displayed after successful login.")
                 .isTrue();
 
-        // 2. Logout butonuna tıkla
+        // 2. Click Logout button
         loginScreen.clickLogout();
 
-        // 3. Tekrar giriş ekranına (Login Butonuna) dönüldü mü doğrula
+        // 3. Verify redirected back to Login screen (Login button is displayed)
         Assertions.assertThat(loginScreen.isLoginButtonDisplayed())
-                .as("Çıkış yapıldıktan sonra tekrar Login butonu görünmelidir.")
+                .as("Login button should be displayed after logout.")
                 .isTrue();
     }
 
 
-    @Test(description = "Geçersiz kimlik bilgileriyle başarısız giriş senaryosu")
-    @Story("Negatif Giriş Senaryosu")
+    @Test(description = "Verify invalid credentials show appropriate error message")
+    @Story("Negative Authentication Flow")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Yanlış şifre girildiğinde hata mesajı görüntülenmelidir.")
+    @Description("Appropriate error message should be displayed when invalid password is provided.")
     public void testInvalidLoginShowsError() {
         HomeScreen homeScreen = new HomeScreen();
         LoginScreen loginScreen = homeScreen.navigateToLoginScreen();
@@ -50,7 +53,7 @@ public class LoginTest extends BaseTest {
 
         String statusMessage = loginScreen.getStatusMessage();
         Assertions.assertThat(statusMessage)
-                .as("Hata mesajı geçersiz giriş uyarısını içermelidir.")
+                .as("Status message should indicate invalid credentials.")
                 .containsIgnoringCase("Invalid");
     }
 }

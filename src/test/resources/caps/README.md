@@ -1,6 +1,6 @@
-# 📱 Appium Capabilities & Inspector Konfigürasyonları
+# 📱 Appium Capabilities & Inspector Configurations
 
-Bu dizin, hem **otomasyon koşumlarında** hem de **Appium Inspector** oturumlarında kullanılan W3C standartlarındaki Desired Capabilities şablonlarını içerir.
+This directory contains W3C-compliant Desired Capabilities configuration templates used for both **automated test execution** and **Appium Inspector** sessions.
 
 ---
 

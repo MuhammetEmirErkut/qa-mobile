@@ -13,17 +13,17 @@ public class IOSLoginPage extends BasePage {
     private final By txtWelcomeHeader = AppiumBy.iOSNsPredicateString("name == 'welcome_header' AND visible == 1");
 
     public IOSLoginPage enterUsername(String username) {
-        sendKeys(inputUsername, username, "Kullanıcı Adı Alanı");
+        sendKeys(inputUsername, username, "Username Field");
         return this;
     }
 
     public IOSLoginPage enterPassword(String password) {
-        sendKeys(inputPassword, password, "Şifre Alanı");
+        sendKeys(inputPassword, password, "Password Field");
         return this;
     }
 
     public IOSLoginPage clickLogin() {
-        click(btnLogin, "Giriş Yap Butonu");
+        click(btnLogin, "Login Button");
         return this;
     }
 

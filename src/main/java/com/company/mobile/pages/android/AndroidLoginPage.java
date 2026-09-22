@@ -13,17 +13,17 @@ public class AndroidLoginPage extends BasePage {
     private final By txtWelcomeHeader = AppiumBy.id("com.example.testapp:id/welcome_header");
 
     public AndroidLoginPage enterUsername(String username) {
-        sendKeys(inputUsername, username, "Kullanıcı Adı Alanı");
+        sendKeys(inputUsername, username, "Username Field");
         return this;
     }
 
     public AndroidLoginPage enterPassword(String password) {
-        sendKeys(inputPassword, password, "Şifre Alanı");
+        sendKeys(inputPassword, password, "Password Field");
         return this;
     }
 
     public AndroidLoginPage clickLogin() {
-        click(btnLogin, "Giriş Yap Butonu");
+        click(btnLogin, "Login Button");
         return this;
     }
 

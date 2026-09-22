@@ -16,10 +16,10 @@ import org.testng.annotations.Test;
 @Feature("Echo Box")
 public class EchoTest extends BaseTest {
 
-    @Test(description = "Mesaj kaydetme ve ekranda doğrulama senaryosu")
+    @Test(description = "Verify saving and displaying echo message on screen")
     @Story("Echo Message Flow")
     @Severity(SeverityLevel.NORMAL)
-    @Description("Kullanıcı bir mesaj yazıp kaydettiğinde, kaydedilen mesaj ekranda görünmelidir.")
+    @Description("When a user enters and saves a message, the saved message must be visible on the screen.")
     public void testSaveMessage() {
         String testMessage = "Appium Test Automation Message";
 
@@ -31,7 +31,7 @@ public class EchoTest extends BaseTest {
 
         String savedText = echoScreen.getSavedMessage();
         Assertions.assertThat(savedText)
-                .as("Kaydedilen metin girilen metin ile birebir aynı olmalıdır.")
+                .as("Saved text should match the entered text exactly.")
                 .isEqualTo(testMessage);
     }
 }

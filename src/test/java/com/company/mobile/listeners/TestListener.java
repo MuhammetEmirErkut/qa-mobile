@@ -16,17 +16,17 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        log.info("=== Test Suite Başlatıldı: {} ===", context.getName());
+        log.info("=== Test Suite Started: {} ===", context.getName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        log.info("=== Test Suite Tamamlandı: {} ===", context.getName());
+        log.info("=== Test Suite Completed: {} ===", context.getName());
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        log.info(">> Test Başlıyor: {}.{} <<", result.getTestClass().getName(), result.getMethod().getMethodName());
+        log.info(">> Test Starting: {}.{} <<", result.getTestClass().getName(), result.getMethod().getMethodName());
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        log.error("FAILED: {}.{} - Hata: {}",
+        log.error("FAILED: {}.{} - Error: {}",
                 result.getTestClass().getName(),
                 result.getMethod().getMethodName(),
                 result.getThrowable() != null ? result.getThrowable().getMessage() : "Unknown Error");
@@ -52,22 +52,22 @@ public class TestListener implements ITestListener {
         log.warn("SKIPPED: {}.{}", result.getTestClass().getName(), result.getMethod().getMethodName());
     }
 
-    @Attachment(value = "Hata Ekran Görüntüsü - {0}", type = "image/png")
+    @Attachment(value = "Failure Screenshot - {0}", type = "image/png")
     public byte[] saveScreenshotPNG(String testName) {
         try {
             return ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
         } catch (Exception e) {
-            log.error("Ekran görüntüsü alınamadı: {}", e.getMessage());
+            log.error("Failed to capture screenshot: {}", e.getMessage());
             return new byte[0];
         }
     }
 
-    @Attachment(value = "Sayfa Kaynağı (DOM Source) - {0}", type = "text/plain")
+    @Attachment(value = "Page Source (DOM) - {0}", type = "text/plain")
     public String savePageSource(String testName) {
         try {
             return DriverManager.getDriver().getPageSource();
         } catch (Exception e) {
-            return "DOM Page Source alınamadı: " + e.getMessage();
+            return "Failed to get DOM Page Source: " + e.getMessage();
         }
     }
 }

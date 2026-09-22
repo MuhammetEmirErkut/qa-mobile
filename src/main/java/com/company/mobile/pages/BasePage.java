@@ -40,7 +40,7 @@ public abstract class BasePage {
     protected void click(By locator, WaitStrategy waitStrategy, String elementName) {
         WebElement element = waitForElement(locator, waitStrategy);
         element.click();
-        log.info("'{}' elementine tıklandı.", elementName);
+        log.info("Clicked on '{}' element.", elementName);
     }
 
     protected void click(By locator, String elementName) {
@@ -52,7 +52,7 @@ public abstract class BasePage {
         element.click();
         element.clear();
         element.sendKeys(text);
-        log.info("'{}' alanına '{}' metni yazıldı.", elementName, text);
+        log.info("Typed text '{}' into '{}' field.", text, elementName);
     }
 
     protected void sendKeys(By locator, String text, String elementName) {
@@ -70,16 +70,16 @@ public abstract class BasePage {
             By androidAlertBtn = By.xpath("//*[@resource-id='android:id/button1' and (contains(@text, 'OK') or contains(@text, 'Close')) and ../..//*[@resource-id='android:id/alertTitle' or contains(@text, 'built for an older')]] | //*[@text=\"Don't Show Again\"]");
             if (!driver.findElements(androidAlertBtn).isEmpty()) {
                 driver.findElement(androidAlertBtn).click();
-                log.info("Android sistem uyarısı kapatıldı.");
+                log.info("Android system dialog dismissed.");
             }
         } catch (Exception ignored) {}
 
         try {
-            // iOS System Dialog & Keychain AutoFill Prompt Buttons (Not Now / Şimdi Değil / Close)
-            By iosAlertBtn = By.xpath("//XCUIElementTypeButton[@name='Not Now' or @name='Şimdi Değil' or @name='Cancel' or @name='Vazgeç' or @name='Close' or @name='Kapat']");
+            // iOS System Dialog & Keychain AutoFill Prompt Buttons (Not Now / Cancel / Close)
+            By iosAlertBtn = By.xpath("//XCUIElementTypeButton[@name='Not Now' or @name='Cancel' or @name='Close']");
             if (!driver.findElements(iosAlertBtn).isEmpty()) {
                 driver.findElement(iosAlertBtn).click();
-                log.info("iOS sistem/parola uyarısı kapatıldı.");
+                log.info("iOS system/keychain prompt dismissed.");
             }
         } catch (Exception ignored) {}
     }

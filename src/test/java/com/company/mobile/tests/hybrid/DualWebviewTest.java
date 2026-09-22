@@ -16,37 +16,37 @@ import org.testng.annotations.Test;
 @Feature("Context Switching & WebView")
 public class DualWebviewTest extends BaseTest {
 
-    @Test(description = "Native moddan WebView moduna geçiş ve HTML element doğrulama")
+    @Test(description = "Switch from native to webview mode and verify HTML elements")
     @Story("Dual Webview Context Switch")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Uygulama içinde gömülü webview açıldığında NATIVE_APP context'inden WEBVIEW context'ine geçiş yapılabilmelidir.")
+    @Description("Verify that the driver can switch between NATIVE_APP and WEBVIEW contexts when embedded webview is opened.")
     public void testDualWebviewContextSwitching() {
         HomeScreen homeScreen = new HomeScreen();
         DualWebviewScreen webviewScreen = homeScreen.navigateToDualWebview();
 
-        // 1. İlk olarak NATIVE_APP modunda olduğumuzu doğrula
+        // 1. Verify initial context is NATIVE_APP
         Assertions.assertThat(webviewScreen.getCurrentContextName())
-                .as("Başlangıçta NATIVE_APP context'inde olunmalıdır.")
+                .as("Initial context should be NATIVE_APP.")
                 .isEqualTo("NATIVE_APP");
 
-        // 2. WEBVIEW context'ine geçiş yap
+        // 2. Switch to WEBVIEW context
         webviewScreen.switchToWebViewContext();
 
-        // 3. Artık WEBVIEW modunda olduğumuzu doğrula
+        // 3. Verify active context is now WEBVIEW
         Assertions.assertThat(webviewScreen.getCurrentContextName())
-                .as("Context başarıyla WEBVIEW olarak değişmiş olmalıdır.")
+                .as("Active context should successfully switch to WEBVIEW.")
                 .containsIgnoringCase("WEBVIEW");
 
-        // 4. Web sayfasının yüklendiğini ve DOM içeriğini oku
+        // 4. Verify web page loaded and inspect DOM content
         String webContent = webviewScreen.getWebPageBodyText();
         Assertions.assertThat(webContent)
-                .as("WebView içindeki web sayfası içeriği boş olmamalıdır.")
+                .as("WebView body content should not be empty.")
                 .isNotEmpty();
 
-        // 5. Tekrar yerel NATIVE_APP moduna geri dön
+        // 5. Switch back to NATIVE_APP context
         webviewScreen.switchToNativeContext();
         Assertions.assertThat(webviewScreen.getCurrentContextName())
-                .as("Test bitiminde tekrar NATIVE_APP context'ine dönülmüş olmalıdır.")
+                .as("Context should return to NATIVE_APP after test completion.")
                 .isEqualTo("NATIVE_APP");
     }
 }

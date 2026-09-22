@@ -30,7 +30,7 @@ public final class DriverFactory {
 
         try {
             var appiumServerUri = URI.create(serverUrl).toURL();
-            log.info("Appium Driver başlatılıyor. Hedef Platform: {}, Server: {}", platformType, serverUrl);
+            log.info("Initializing Appium Driver. Target Platform: {}, Server: {}", platformType, serverUrl);
 
             switch (platformType) {
                 case ANDROID -> {
@@ -84,10 +84,10 @@ public final class DriverFactory {
                     options.withBrowserName("Safari");
                     driver = new IOSDriver(appiumServerUri, options);
                 }
-                default -> throw new FrameworkException("Desteklenmeyen platform türü: " + platformType);
+                default -> throw new FrameworkException("Unsupported platform type: " + platformType);
             }
         } catch (MalformedURLException e) {
-            throw new FrameworkException("Geçersiz Appium Server URL: " + serverUrl, e);
+            throw new FrameworkException("Invalid Appium Server URL: " + serverUrl, e);
         }
 
         return driver;

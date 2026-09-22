@@ -13,19 +13,19 @@ public class HomeScreen extends BasePage {
 
     public LoginScreen navigateToLoginScreen() {
         dismissSystemAlertIfPresent();
-        click(btnLoginScreen, "Login Screen Menü Öğesi");
+        click(btnLoginScreen, "Login Screen Menu Item");
         return new LoginScreen();
     }
 
     public EchoScreen navigateToEchoScreen() {
         dismissSystemAlertIfPresent();
-        click(btnEchoBox, "Echo Box Menü Öğesi");
+        click(btnEchoBox, "Echo Box Menu Item");
         return new EchoScreen();
     }
 
     public DualWebviewScreen navigateToDualWebview() {
         dismissSystemAlertIfPresent();
-        click(btnDualWebview, "Dual Webview Menü Öğesi");
+        click(btnDualWebview, "Dual Webview Menu Item");
         return new DualWebviewScreen();
     }
 

@@ -13,17 +13,17 @@ public class LoginScreen extends BasePage {
     private final By btnLogout = AppiumBy.accessibilityId("Logout");
 
     public LoginScreen enterUsername(String username) {
-        sendKeys(inputUsername, username, "Kullanıcı Adı");
+        sendKeys(inputUsername, username, "Username Input Field");
         return this;
     }
 
     public LoginScreen enterPassword(String password) {
-        sendKeys(inputPassword, password, "Şifre");
+        sendKeys(inputPassword, password, "Password Input Field");
         return this;
     }
 
     public LoginScreen clickLogin() {
-        click(btnLogin, "Giriş Butonu");
+        click(btnLogin, "Login Button");
         return this;
     }
 
@@ -44,7 +44,7 @@ public class LoginScreen extends BasePage {
 
     public LoginScreen clickLogout() {
         dismissSystemAlertIfPresent();
-        click(btnLogout, "Çıkış Yap (Logout) Butonu");
+        click(btnLogout, "Logout Button");
         return this;
     }
 

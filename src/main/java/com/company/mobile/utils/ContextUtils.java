@@ -21,7 +21,7 @@ public final class ContextUtils {
             long endTime = System.currentTimeMillis() + 15000;
             while (System.currentTimeMillis() < endTime) {
                 Set<?> contexts = (Set<?>) contextDriver.getContextHandles();
-                log.info("Mevcut context listesi: {}", contexts);
+                log.info("Available contexts: {}", contexts);
                 for (Object contextObj : contexts) {
                     String contextName = (contextObj instanceof java.util.Map<?, ?> map && map.containsKey("id"))
                             ? String.valueOf(map.get("id"))
@@ -29,7 +29,7 @@ public final class ContextUtils {
 
                     if (contextName.toUpperCase().contains("WEBVIEW")) {
                         contextDriver.context(contextName);
-                        log.info("WebView context'ine başarıyla geçildi: {}", contextName);
+                        log.info("Successfully switched to WebView context: {}", contextName);
                         return;
                     }
                 }
@@ -37,9 +37,9 @@ public final class ContextUtils {
                     Thread.sleep(500);
                 } catch (InterruptedException ignored) {}
             }
-            throw new FrameworkException("Zaman aşımı: Uygulama içinde herhangi bir WEBVIEW context'i bulunamadı!");
+            throw new FrameworkException("Timeout: No WEBVIEW context found within the mobile application!");
         } else {
-            throw new FrameworkException("Mevcut driver context switching özelliğini desteklemiyor!");
+            throw new FrameworkException("Current driver does not support context switching!");
         }
     }
 
@@ -47,7 +47,7 @@ public final class ContextUtils {
         AppiumDriver driver = DriverManager.getDriver();
         if (driver instanceof SupportsContextSwitching contextDriver) {
             contextDriver.context("NATIVE_APP");
-            log.info("NATIVE_APP context'ine geri dönüldü.");
+            log.info("Switched back to NATIVE_APP context.");
         }
     }
 

@@ -17,7 +17,7 @@ public class RetryAnalyzer implements IRetryAnalyzer {
         boolean retryEnabled = ConfigurationManager.getConfiguration().retryFailedTests();
         if (retryEnabled && counter < FrameworkConstants.MAX_RETRY_COUNT) {
             counter++;
-            log.warn("Test başarısız oldu! Yeniden deneniyor ({}/{}): {}",
+            log.warn("Test failed! Retrying execution ({}/{}): {}",
                     counter, FrameworkConstants.MAX_RETRY_COUNT, result.getName());
             return true;
         }

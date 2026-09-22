@@ -10,22 +10,22 @@ pipeline {
         choice(
             name: 'PLATFORM',
             choices: ['android', 'ios', 'parallel'],
-            description: 'Koşturulacak hedef mobil platform profili'
+            description: 'Target mobile platform execution profile'
         )
         string(
             name: 'CUSTOM_TEST',
             defaultValue: '',
-            description: 'Tekil test çalıştırmak için sınıf veya metod adı (Örn: DualWebviewTest veya LoginTest#testValidLoginAndLogout). Boş bırakılırsa tüm suite koşar.'
+            description: 'Single test class or method name (e.g. DualWebviewTest or LoginTest#testValidLoginAndLogout). Runs entire suite if empty.'
         )
         string(
             name: 'APPIUM_URL',
             defaultValue: 'http://host.docker.internal:4723',
-            description: 'Appium Sunucu URL adresi (Docker konteyneri içerisinden host makineye erişim)'
+            description: 'Appium Server URL (Accessible from inside Docker container to host machine)'
         )
         booleanParam(
             name: 'CLEAN_BUILD',
             defaultValue: true,
-            description: 'Test öncesinde target dizinini temizle (mvn clean)'
+            description: 'Clean target directory before test execution (mvn clean)'
         )
     }
 
@@ -39,14 +39,14 @@ pipeline {
             steps {
                 script {
                     echo "=========================================================="
-                    echo "🚀 QA Mobile Automation CI Pipeline Başlatıldı"
+                    echo "🚀 QA Mobile Automation CI Pipeline Started"
                     echo "📱 Platform: ${params.PLATFORM}"
-                    echo "🧪 Özel Test: ${params.CUSTOM_TEST.isEmpty() ? 'Tüm Suite' : params.CUSTOM_TEST}"
+                    echo "🧪 Custom Test: ${params.CUSTOM_TEST.isEmpty() ? 'Full Suite' : params.CUSTOM_TEST}"
                     echo "🌐 Appium URL: ${params.APPIUM_URL}"
                     echo "=========================================================="
                     sh 'java -version'
                     sh 'mvn -version'
-                    sh 'allure --version || echo "Allure CLI globalde bulunamadı, Maven plugin kullanılacak."'
+                    sh 'allure --version || echo "Allure CLI not found globally, Maven plugin will be used."'
                 }
             }
         }
@@ -54,9 +54,9 @@ pipeline {
         stage('Appium Connectivity Check') {
             steps {
                 script {
-                    echo "🔍 Appium sunucusuna erişim test ediliyor: ${params.APPIUM_URL}/status"
+                    echo "🔍 Testing Appium server connectivity: ${params.APPIUM_URL}/status"
                     sh """
-                        curl -s -f ${params.APPIUM_URL}/status || echo "UYARI: Appium sunucusuna ulaşılamadı. Lütfen sunucunun açık olduğundan emin olun."
+                        curl -s -f ${params.APPIUM_URL}/status || echo "WARNING: Unable to reach Appium server. Please ensure the server is running."
                     """
                 }
             }
@@ -74,7 +74,7 @@ pipeline {
                         testCommand += " -P${params.PLATFORM}"
                     }
 
-                    echo "⚡ Çalıştırılan Maven Komutu: ${testCommand}"
+                    echo "⚡ Executing Maven Command: ${testCommand}"
                     sh "${testCommand}"
                 }
             }
@@ -84,9 +84,9 @@ pipeline {
     post {
         always {
             script {
-                echo "📊 Test sonuçları ve Allure raporları toplanıyor..."
+                echo "📊 Collecting test results and Allure reports..."
 
-                // Allure Sonuçlarını derle (Eğer eklenti kuruluysa çalışır)
+                // Compile Allure results if plugin is present
                 try {
                     allure([
                         includeProperties: false,
@@ -96,25 +96,25 @@ pipeline {
                         results: [[path: 'target/allure-results']]
                     ])
                 } catch (Exception e) {
-                    echo "Allure Jenkins eklentisi bulunamadı veya rapor oluşturulamadı: ${e.message}"
+                    echo "Allure Jenkins plugin not installed or failed to generate report: ${e.message}"
                 }
 
-                // TestNG XML raporlarını arşivle
+                // Archive TestNG XML reports
                 try {
                     junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
                 } catch (Exception e) {
-                    echo "JUnit eklentisi bulunamadı: ${e.message}"
+                    echo "JUnit plugin not installed: ${e.message}"
                 }
 
-                // Ekran görüntüleri ve logları arşivle
+                // Archive screenshots and logs
                 archiveArtifacts artifacts: 'target/surefire-reports/**', allowEmptyArchive: true
             }
         }
         success {
-            echo "✅ TÜM MOBİL TESTLER BAŞARIYLA TAMAMLANDI!"
+            echo "✅ ALL MOBILE TESTS COMPLETED SUCCESSFULLY!"
         }
         failure {
-            echo "❌ BAZI TESTLER BAŞARISIZ OLDU VEYA HATA ALINDI! Lütfen Allure raporunu ve logları inceleyin."
+            echo "❌ SOME TESTS FAILED OR ENCOUNTERED AN ERROR! Please inspect Allure report and build logs."
         }
     }
 }

@@ -11,12 +11,12 @@ public class EchoScreen extends BasePage {
     private final By txtSavedMessage = By.xpath("//*[@name='savedMessage' or @resource-id='savedMessage' or @content-desc='savedMessage']");
 
     public EchoScreen enterMessage(String message) {
-        sendKeys(inputMessage, message, "Mesaj Giriş Alanı");
+        sendKeys(inputMessage, message, "Message Input Field");
         return this;
     }
 
     public EchoScreen clickSave() {
-        click(btnSave, "Kaydet Butonu");
+        click(btnSave, "Save Button");
         return this;
     }
 

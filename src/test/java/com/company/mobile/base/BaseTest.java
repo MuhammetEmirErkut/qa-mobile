@@ -27,7 +27,7 @@ public class BaseTest {
                     : ConfigurationManager.getConfiguration().platformName());
 
         PlatformType platformType = PlatformType.valueOf(targetPlatform.toUpperCase());
-        log.info("Test başlatılıyor. Seçilen Platform: {}", platformType);
+        log.info("Starting test. Selected Platform: {}", platformType);
 
         AppiumDriver driver = DriverFactory.createDriverInstance(platformType);
         DriverManager.setDriver(driver);
@@ -36,11 +36,11 @@ public class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         if (DriverManager.getDriver() != null) {
-            log.info("Test oturumu sonlandırılıyor ve driver kapatılıyor.");
+            log.info("Tearing down test session and quitting driver.");
             try {
                 DriverManager.getDriver().quit();
             } catch (Exception e) {
-                log.warn("Driver kapatılırken hata oluştu: {}", e.getMessage());
+                log.warn("Error encountered while quitting driver: {}", e.getMessage());
             } finally {
                 DriverManager.unloadDriver();
             }

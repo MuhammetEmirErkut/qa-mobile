@@ -17,7 +17,7 @@ public final class JsonUtils {
         try {
             return OBJECT_MAPPER.readTree(new File(filePath));
         } catch (IOException e) {
-            throw new FrameworkException("JSON dosyası okunamadı: " + filePath, e);
+            throw new FrameworkException("Failed to read JSON file: " + filePath, e);
         }
     }
 }
